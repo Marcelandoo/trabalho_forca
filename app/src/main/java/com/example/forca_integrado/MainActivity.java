@@ -2,6 +2,7 @@ package com.example.forca_integrado;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.autofill.OnClickAction;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,8 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button b;
 
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        b = findViewById(R.id.button);
+        b= findViewById(R.id.button);
         b.setOnClickListener(this);
     }
 
