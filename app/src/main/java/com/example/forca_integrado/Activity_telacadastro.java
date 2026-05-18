@@ -1,6 +1,7 @@
 package com.example.forca_integrado;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,18 +23,20 @@ public class Activity_telacadastro extends AppCompatActivity implements View.OnC
     private Button btnCadastrar, btnListar;
     private RadioGroup grupo;
     private String categoriaSelecionada, palavra;
+    private BD bd;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_telacadastro);
+        setContentView(R.layout.activity_activitytelacadastro);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        bd = new BD(Activity_telacadastro.this);
         textoDaPalavra = findViewById(R.id.textPalavra);
         btnCadastrar = findViewById(R.id.button3);
         btnCadastrar.setOnClickListener(this);
@@ -48,9 +51,37 @@ public class Activity_telacadastro extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         if(v == btnCadastrar){
 
+            String texto = textoDaPalavra.getText().toString();
+
+            boolean temTextoDigitado = false;
+            if(texto.isEmpty()){
+                Toast.makeText(this, "Faltou palavra!", Toast.LENGTH_SHORT).show();
+            }else {
+                temTextoDigitado = true;
+            }
+
+            RadioButton r = findViewById(R.id.radioButton5);
+            RadioButton r1 = findViewById(R.id.radioButton6);
+            RadioButton r2 = findViewById(R.id.radioButton7);
+            RadioButton r3 = findViewById(R.id.radioButton8);
+            RadioButton r4 = findViewById(R.id.radioButton9);
+
+            boolean temRadioChecado = false;
+            if(r.isChecked()||r1.isChecked()||r2.isChecked()||r3.isChecked()||r4.isChecked()){
+                temRadioChecado = true;
+            }else {
+                Toast.makeText(this, "Faltou marcar categoria!", Toast.LENGTH_SHORT).show();
+            }
+
+            if(temTextoDigitado && temRadioChecado){
+                Palavra palavra1 = new Palavra();
+                palavra1.setPalavraDigitada(texto);
+                bd.salvarPalavra(palavra1);
+            }
+
         }
         if(v == btnListar){
-
+            startActivity(new Intent(this, TelaRecycler.class));
         }
     }
 
