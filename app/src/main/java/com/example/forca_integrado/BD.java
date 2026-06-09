@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BD extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "banco.db";
+    private static final String DATABASE_NAME = "banco1.db";
 
     public BD(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,6 +24,8 @@ public class BD extends SQLiteOpenHelper {
                 "CREATE TABLE IF NOT EXISTS tabelaPalavra ("+
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "palavra TEXT, "+
+                        "nivel TEXT, "+
+                        "dica TEXT, "+
                 "categoria TEXT )"
         );
     }
@@ -33,6 +35,8 @@ public class BD extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put("palavra", p.getPalavraDigitada());
         valores.put("categoria", p.getPalavraDigitada());
+        valores.put("nivel", p.getPalavraDigitada());
+        valores.put("dica", p.getPalavraDigitada());
         db.insert("tabelaPalavra", null, valores);
         db.close();
     }
@@ -47,6 +51,8 @@ public class BD extends SQLiteOpenHelper {
             Palavra p = new Palavra();
             p.setPalavraDigitada(palavra);
             p.setCategoria(categoria);
+            p.setNivel(categoria);
+            p.setDica(categoria);
             lista.add(p);
         }
         cursor.close();
